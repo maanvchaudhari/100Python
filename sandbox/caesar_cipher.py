@@ -31,7 +31,7 @@ def main():
         try:
             shift = int(input("Enter shift value\n→ "))
             break
-        except:
+        except ValueError:
             print("⚠️ Invalid shift value, type in a valid integer number")
     result = caesar_cipher(message, operation, shift)
     print(f"\n{operation.capitalize()}ed message is: {result} ")
