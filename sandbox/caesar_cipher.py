@@ -13,7 +13,7 @@ def caesar_cipher(message, operation, shift):
     if operation == "decrypt":
         shift *= -1
     for char in message:
-        if char.isalpha():
+        if char.isalpha() and char.isascii():
             result.append(shift_char(char, shift))
         else:
             result.append(char)
