@@ -1,5 +1,4 @@
 import string
-import subprocess
 
 
 def shift_char(char, shift):
@@ -10,11 +9,11 @@ def shift_char(char, shift):
     return alphabets[new_index]
 
 
-def caesar_cipher(secret_code, shift, operation):
+def caesar_cipher(message, operation, shift):
     result = []
     if operation == "decrypt":
         shift *= -1
-    for char in secret_code:
+    for char in message:
         if char.isalpha():
             result.append(shift_char(char, shift))
         else:
@@ -23,17 +22,19 @@ def caesar_cipher(secret_code, shift, operation):
 
 
 def main():
-    subprocess.run("clear", shell=True)
-    print("WELCOME TO CAESAR CIPHER")
-    print("=" * 25)
-    secret_code = input("\nEnter your secret code\n→ ")
-    shift = int(input("Enter shift value\n→ "))
-    # Validate operation input
-    operation = input("What operation do you want to perform [encrypt/decrypt] \n→ ")
-    while operation != "encrypt" and operation != "decrypt":
-        print("⚠️ Invalid operation. Please try again.")
-        operation = input("What operation do you want to perform [encrypt/decrypt]\n→ ")
-    caesar_cipher(secret_code, shift, operation)
+    message = input("Enter the message\n→ ")
+    # Enter operation
+    operation = input("Do you want encrypt or decrypt this message\n→ ").lower()
+    while operation not in ("encrypt", "decrypt"):
+        operation = input("Do you want encrypt or decrypt this message\n→ ").lower()
+    # Enter shift value
+    while True:
+        try:
+            shift = int(input("Enter shift value\n→ "))
+            break
+        except ValueError:
+            print("⚠️ Invalid input given")
+    caesar_cipher(message, operation, shift)
 
 
 if __name__ == "__main__":
