@@ -2,11 +2,10 @@ import string
 
 
 def shift_char(char, shift):
-    alphabets = (
-        list(string.ascii_uppercase) if char.isupper() else list(string.ascii_lowercase)
-    )
-    new_index = (alphabets.index(char) + shift) % 26
-    return alphabets[new_index]
+    base = ord("A") if char.isupper() else ord("a")
+    char_index = ord(char) - base
+    new_index = ((char_index + shift) % 26) + base
+    return chr(new_index)
 
 
 def caesar_cipher(message, operation, shift):
@@ -18,15 +17,17 @@ def caesar_cipher(message, operation, shift):
             result.append(shift_char(char, shift))
         else:
             result.append(char)
-    print("".join(result))
+    return f"\n{operation.capitalize()}ed message: {''.join(result)}"
 
 
 def main():
     message = input("Enter the message\n→ ")
     # Enter operation
-    operation = input("Do you want encrypt or decrypt this message\n→ ").lower()
+    operation = input("Do you want encrypt or decrypt this message\n→ ").strip().lower()
     while operation not in ("encrypt", "decrypt"):
-        operation = input("Do you want encrypt or decrypt this message\n→ ").lower()
+        operation = (
+            input("Do you want encrypt or decrypt this message\n→ ").strip().lower()
+        )
     # Enter shift value
     while True:
         try:
@@ -34,7 +35,7 @@ def main():
             break
         except ValueError:
             print("⚠️ Invalid input given")
-    caesar_cipher(message, operation, shift)
+    print(caesar_cipher(message, operation, shift))
 
 
 if __name__ == "__main__":
