@@ -1,4 +1,4 @@
-import string
+import subprocess
 
 
 def shift_char(char, shift):
@@ -17,25 +17,31 @@ def caesar_cipher(message, operation, shift):
             result.append(shift_char(char, shift))
         else:
             result.append(char)
-    return f"\n{operation.capitalize()}ed message: {''.join(result)}"
+    return "".join(result)
 
 
 def main():
-    message = input("Enter the message\n→ ")
-    # Enter operation
-    operation = input("Do you want encrypt or decrypt this message\n→ ").strip().lower()
+    subprocess.run("clear", shell=True)
+    message = input("Enter your message\n→ ")
+    operation = input("Do you want to encrypt or decrypt\n→ ").strip().lower()
     while operation not in ("encrypt", "decrypt"):
-        operation = (
-            input("Do you want encrypt or decrypt this message\n→ ").strip().lower()
-        )
-    # Enter shift value
+        print("⚠️ Invalid operation, choose either 'encrypt' or 'decrypt'")
+        operation = input("Do you want to encrypt or decrypt\n→ ").strip().lower()
     while True:
         try:
             shift = int(input("Enter shift value\n→ "))
             break
-        except ValueError:
-            print("⚠️ Invalid input given")
-    print(caesar_cipher(message, operation, shift))
+        except:
+            print("⚠️ Invalid shift value, type in a valid integer number")
+    result = caesar_cipher(message, operation, shift)
+    print(f"\n{operation.capitalize()}ed message is: {result} ")
+    play_again = input("\nWant to try another message? [yes/no]\n→ ").strip().lower()
+    while play_again not in ("yes", "no"):
+        play_again = (
+            input("\nWant to try another message? [yes/no]\n→ ").strip().lower()
+        )
+    if play_again == "yes":
+        main()
 
 
 if __name__ == "__main__":
