@@ -47,16 +47,56 @@ HANGMAN_ART = [
      ===""",
 ]
 WORDS = [
-    "mean",
-    "transparent",
-    "fair",
-    "dressing",
-    "theft",
-    "powder",
-    "teach",
-    "manner",
-    "rock",
-    "convulsion",
+    "umbrella",
+    "jazz",
+    "phosphorus",
+    "elk",
+    "cathedral",
+    "smirk",
+    "avalanche",
+    "quill",
+    "obsidian",
+    "fern",
+    "archipelago",
+    "blunt",
+    "marmalade",
+    "sphinx",
+    "crevice",
+    "tangerine",
+    "molt",
+    "labyrinth",
+    "dusk",
+    "carburetor",
+    "plinth",
+    "gecko",
+    "sulphur",
+    "hammock",
+    "tundra",
+    "scalpel",
+    "brine",
+    "kaleidoscope",
+    "wasp",
+    "fjord",
+    "medallion",
+    "squelch",
+    "papyrus",
+    "crow",
+    "vortex",
+    "linoleum",
+    "amber",
+    "snout",
+    "pendulum",
+    "cactus",
+    "grimace",
+    "solstice",
+    "flint",
+    "mirage",
+    "cobalt",
+    "tadpole",
+    "wrench",
+    "epoch",
+    "lantern",
+    "bog",
 ]
 
 
@@ -69,7 +109,7 @@ def main():
         subprocess.run(["clear"])
         print(HANGMAN_ART[wrong_guesses])
         print("\nYour word to guess is ", " ".join(blanks))
-        print(f"Kisiko batana mat: {chosen_word}")
+        # print(f"Kisiko batana mat: {chosen_word}")
         user_guess = input("\nMake your guess: ").strip().lower()
         if not user_guess.isalpha() or len(user_guess) != 1:
             print("⚠️ Enter a single alphabet only.")
