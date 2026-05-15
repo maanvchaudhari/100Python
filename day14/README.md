@@ -2,6 +2,10 @@
 
 A command-line coffee machine simulator written in Python. The program lets a user choose a drink, checks whether there are enough ingredients, accepts coin input, refunds insufficient payments, returns change, and prepares the selected coffee.
 
+## Program Flow
+
+![Coffee Machine Flow](coffee_machine_flow.svg)
+
 ## Features
 
 - Shows a numbered menu for espresso, latte, and cappuccino.
