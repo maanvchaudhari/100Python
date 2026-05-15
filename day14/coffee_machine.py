@@ -32,7 +32,6 @@ resources = {
     "milk": 200,
     "coffee": 100,
 }
-profit = 0
 
 
 def show_menu():
@@ -65,7 +64,12 @@ def take_money():
     )
 
 
+def enough_money(money, drink_cost):
+    return money < drink_cost
+
+
 def main():
+    profit = 0
     subprocess.run(["clear"])
     drink_options = show_menu()
     drink = get_drink_name(drink_options)
@@ -75,10 +79,16 @@ def main():
             print(f"‼️ There is not enough {resource}. Sorry for the inconvenience")
             return "Have a good day!"
     money = take_money()
-    if money < MENU[drink]["cost"]:
-        print("⚠️ Sorry, you didn't put in enough money. Here's your refund.")
+    drink_cost = MENU[drink]["cost"]
+    if enough_money(money, drink_cost):
+        print("\n⚠️ Sorry, you didn't put in enough money. Here's your refund.")
         return "Have a good day!"
     resources[resource] -= drink_ingredients[resource]
+    profit += drink_cost
+    change = round(money - drink_cost, 2)
+    if change > 0:
+        print(f"\nYour change ₹{change}")
+    print(f"And here's your {drink} ☕️. Enjoy!")
 
 
 if __name__ == "__main__":
