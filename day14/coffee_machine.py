@@ -4,6 +4,7 @@ MENU = {
     "espresso": {
         "ingredients": {
             "water": 50,
+            "milk": 0,
             "coffee": 18,
         },
         "cost": 1.5,
@@ -34,6 +35,15 @@ resources = {
 profit = 0
 
 
+def show_menu():
+    print("*** MENU ***")
+    drink_options = {}
+    for count, drink in enumerate(MENU, start=1):
+        drink_options[count] = drink
+        print(f"[{count}] {drink.capitalize()}")
+    return drink_options
+
+
 def get_drink_name(options):
     while True:
         try:
@@ -45,11 +55,27 @@ def get_drink_name(options):
             print("⚠️ Enter a number")
 
 
-subprocess.run(["clear"])
-print("*** MENU ***")
-#! SOMETHING NEW
-drink_options = {}
-for count, drink in enumerate(MENU, start=1):
-    drink_options[count] = drink
-    print(f"[{count}] {drink.capitalize()}")
-drink = get_drink_name(drink_options)
+def take_money():
+    quarters = int(input("How many quarters: "))
+    dimes = int(input("How many dimes: "))
+    nickels = int(input("How many nickels: "))
+    pennies = int(input("How many pennies: "))
+    return round((quarters * 0.25) + (dimes * 0.1) + (nickels * 0.05) + (pennies * 0.01), 2)
+
+
+def main():
+    subprocess.run(["clear"])
+    drink_options = show_menu()
+    drink = get_drink_name(drink_options)
+    drink_ingredients = MENU[drink]["ingredients"]
+    for resource in resources:
+        if resources[resource] < drink_ingredients[resource]:
+            print(f"‼️ Sorry there is not enough {resource}")
+            return
+    drink_cost = MENU[drink]["cost"]
+    money = take_money()
+    # resources[resource] -= drink_ingredients[resource]
+
+
+if __name__ == "__main__":
+    main()
