@@ -4,7 +4,6 @@ MENU = {
     "espresso": {
         "ingredients": {
             "water": 50,
-            "milk": 0,
             "coffee": 18,
         },
         "cost": 1.5,
@@ -26,12 +25,12 @@ MENU = {
         "cost": 3.0,
     },
 }
-
 resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
 }
+profit = 0
 
 
 def show_menu():
@@ -54,36 +53,52 @@ def get_drink_name(options):
             print("⚠️ Enter a number")
 
 
+def take_coins(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value >= 0:
+                return value
+            print("⚠️ Enter a positive number")
+        except ValueError:
+            print("⚠️ Enter a whole number")
+
+
 def take_money():
-    quarters = int(input("How many quarters: "))
-    dimes = int(input("How many dimes: "))
-    nickels = int(input("How many nickels: "))
-    pennies = int(input("How many pennies: "))
+    quarters = take_coins("How many quarters: ")
+    dimes = take_coins("How many dimes: ")
+    nickels = take_coins("How many nickels: ")
+    pennies = take_coins("How many pennies: ")
     return round(
         (quarters * 0.25) + (dimes * 0.1) + (nickels * 0.05) + (pennies * 0.01), 2
     )
 
 
-def enough_money(money, drink_cost):
+def insufficient_funds(money, drink_cost):
     return money < drink_cost
 
 
 def main():
-    profit = 0
     subprocess.run(["clear"])
     drink_options = show_menu()
     drink = get_drink_name(drink_options)
     drink_ingredients = MENU[drink]["ingredients"]
-    for resource in resources:
+    # TODO: Check resources
+    for resource in drink_ingredients:
         if resources[resource] < drink_ingredients[resource]:
             print(f"‼️ There is not enough {resource}. Sorry for the inconvenience")
-            return "Have a good day!"
+            return
+    # TODO: Take & check payment
     money = take_money()
     drink_cost = MENU[drink]["cost"]
-    if enough_money(money, drink_cost):
+    if insufficient_funds(money, drink_cost):
         print("\n⚠️ Sorry, you didn't put in enough money. Here's your refund.")
-        return "Have a good day!"
-    resources[resource] -= drink_ingredients[resource]
+        return
+    # Deduct the all the resource only once all sufficient ingredients are there
+    for resource in drink_ingredients:
+        resources[resource] -= drink_ingredients[resource]
+
+    global profit
     profit += drink_cost
     change = round(money - drink_cost, 2)
     if change > 0:
