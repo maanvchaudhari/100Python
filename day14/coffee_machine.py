@@ -60,7 +60,9 @@ def take_money():
     dimes = int(input("How many dimes: "))
     nickels = int(input("How many nickels: "))
     pennies = int(input("How many pennies: "))
-    return round((quarters * 0.25) + (dimes * 0.1) + (nickels * 0.05) + (pennies * 0.01), 2)
+    return round(
+        (quarters * 0.25) + (dimes * 0.1) + (nickels * 0.05) + (pennies * 0.01), 2
+    )
 
 
 def main():
@@ -70,11 +72,13 @@ def main():
     drink_ingredients = MENU[drink]["ingredients"]
     for resource in resources:
         if resources[resource] < drink_ingredients[resource]:
-            print(f"‼️ Sorry there is not enough {resource}")
-            return
-    drink_cost = MENU[drink]["cost"]
+            print(f"‼️ There is not enough {resource}. Sorry for the inconvenience")
+            return "Have a good day!"
     money = take_money()
-    # resources[resource] -= drink_ingredients[resource]
+    if money < MENU[drink]["cost"]:
+        print("⚠️ Sorry, you didn't put in enough money. Here's your refund.")
+        return "Have a good day!"
+    resources[resource] -= drink_ingredients[resource]
 
 
 if __name__ == "__main__":
